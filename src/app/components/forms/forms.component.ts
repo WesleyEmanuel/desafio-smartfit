@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { UnitsService } from 'src/app/services/units/units.service';
 
 @Component({
   selector: 'app-forms',
@@ -9,13 +10,18 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class FormsComponent implements OnInit {
   results = [];
   formGroup!: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private unitsService: UnitsService
+  ) {}
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       hour: '',
       showClosed: false,
     });
+
+    this.getAllUnits();
   }
 
   onSubmit(): void {
@@ -24,5 +30,9 @@ export class FormsComponent implements OnInit {
 
   onClean(): void {
     this.formGroup.reset();
+  }
+
+  getAllUnits(): void {
+    this.unitsService.getAllUnits().subscribe((data) => console.log(data));
   }
 }
