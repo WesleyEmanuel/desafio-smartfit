@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from 'src/app/models/units/location.model';
+import { FilterUnitsService } from 'src/app/services/units/filter-units.service';
 import { UnitsService } from 'src/app/services/units/units.service';
 
 @Component({
@@ -16,23 +17,35 @@ export class FormsComponent implements OnInit {
   formGroup!: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
-    private unitsService: UnitsService
+    private unitsService: UnitsService,
+    private filterUnitsService: FilterUnitsService
   ) {}
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       hour: '',
-      showClosed: false,
+      showClosed: true,
     });
 
     this.getAllUnits();
   }
 
   onSubmit(): void {
-    if (!this.formGroup.value.showClosed) {
-      this.filteredResults = this.results.filter((location) => location.opened);
+    let { hour, showClosed } = this.formGroup.value;
+
+    if (!showClosed) {
+      this.filteredResults = this.filterUnitsService.filterByOpenUnits(
+        this.results
+      );
     } else {
       this.filteredResults = this.results;
+    }
+
+    if (hour) {
+      this.filteredResults = this.filterUnitsService.filterUnitsByOpenHour(
+        this.filteredResults,
+        hour
+      );
     }
   }
 
@@ -42,8 +55,9 @@ export class FormsComponent implements OnInit {
 
   getAllUnits(): void {
     this.unitsService.getAllUnits().subscribe((data) => {
-      this.results = data.locations;
-      this.filteredResults = data.locations;
+      const response = data.locations.filter((location) => location.schedules);
+      this.results = response;
+      this.filteredResults = response;
     });
   }
 }
