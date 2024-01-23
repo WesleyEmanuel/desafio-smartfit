@@ -5,6 +5,7 @@
   background-color: whitesmoke;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   gap: 3rem;
 
@@ -30,5 +31,11 @@
         width: 70px;
       }
     }
+  }
+}
+
+@media (min-width: 1200px) {
+  .legend-container {
+    flex-direction: row;
   }
 }
