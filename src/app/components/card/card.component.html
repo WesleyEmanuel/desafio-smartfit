@@ -1,0 +1,31 @@
+<div class="card">
+  <span [ngClass]="{ open: unit?.opened, close: !unit?.opened }">{{
+    unit?.opened ? "Aberto" : "Fechado"
+  }}</span>
+  <h2>{{ unit?.title }}</h2>
+  <p [innerHTML]="unit?.content" class="adress"></p>
+  <div>
+    <img
+      *ngIf="unit?.mask"
+      [src]="'/assets/images/png/' + unit?.mask + '-mask.png'"
+    />
+    <img
+      *ngIf="unit?.towel"
+      [src]="'/assets/images/png/' + unit?.towel + '-towel.png'"
+    />
+    <img
+      *ngIf="unit?.fountain"
+      [src]="'/assets/images/png/' + unit?.fountain + '-fountain.png'"
+    />
+    <img
+      *ngIf="unit?.locker_room"
+      [src]="'/assets/images/png/' + unit?.locker_room + '-lockerroom.png'"
+    />
+  </div>
+  <ul class="schedules">
+    <li *ngFor="let schedule of unit?.schedules">
+      <h2>{{ schedule.weekdays }}</h2>
+      <p class="hour">{{ schedule.hour }}</p>
+    </li>
+  </ul>
+</div>

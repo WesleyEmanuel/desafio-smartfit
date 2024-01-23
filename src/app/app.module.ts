@@ -9,6 +9,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FormsComponent } from './components/forms/forms.component';
 import { CadsListComponent } from './components/cads-list/cads-list.component';
 import { CommonModule } from '@angular/common';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     FormsComponent,
     CadsListComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,

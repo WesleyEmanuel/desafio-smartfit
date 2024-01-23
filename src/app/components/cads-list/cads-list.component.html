@@ -1,1 +1,3 @@
-<p>{{ unitsList.length }}</p>
+<div class="cards">
+  <app-card *ngFor="let unit of unitsList" [unit]="unit"></app-card>
+</div>
